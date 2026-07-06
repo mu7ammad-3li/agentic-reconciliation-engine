@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package ledger.v1;
+option go_package = "github.com/muhammadali/ledger-go/grpc/pb;pb";
+
+import "google/protobuf/timestamp.proto";
+
+// ─── Account messages ────────────────────────────────────────────
+message Account {
+  string id         = 1;
+  string owner_name = 2;
+  string currency   = 3;
+  int64  balance    = 4;  // integer cents — no decimals
+  google.protobuf.Timestamp created_at = 5;
+}
+
+message AccountRequest {
+  string account_id = 1;
+}
+
+message Balance {
+  string account_id = 1;
+  int64  amount     = 2;
+  string currency   = 3;
+}
+
+// ─── Transaction messages ─────────────────────────────────────────
+message Transaction {
+  string id               = 1;
+  string idempotency_key  = 2;
+  string from_account_id  = 3;
+  string to_account_id    = 4;
+  int64  amount           = 5;
+  string status           = 6;  // pending | completed | failed | reversed
+  string review_status    = 7;  // under_review | resolved | auto_matched | "" (null)
+  google.protobuf.Timestamp created_at = 8;
+}
+
+message TransactionQuery {
+  string account_id = 1;
+  int32  limit      = 2;  // default 50
+  int32  offset     = 3;
+}
+
+message TransactionList {
+  repeated Transaction transactions = 1;
+  int32 total = 2;
+}
+
+// ─── Flag messages ────────────────────────────────────────────────
+message FlagRequest {
+  string transaction_id = 1;
+  string review_status  = 2;  // under_review | resolved | auto_matched
+  string reason         = 3;  // free text from AI agent
+}
+
+message FlagResponse {
+  bool   success        = 1;
+  string transaction_id = 2;
+  string review_status  = 3;
+}
+
+// ─── Service ──────────────────────────────────────────────────────
+service LedgerService {
+  rpc GetTransactions    (TransactionQuery) returns (TransactionList);
+  rpc GetAccountBalance  (AccountRequest)  returns (Balance);
+  rpc FlagTransaction    (FlagRequest)     returns (FlagResponse);
+}
