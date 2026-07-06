@@ -1,0 +1,3 @@
+[submodule "ledger-go"]
+	path = ledger-go
+	url = ../Banking-Ledger
