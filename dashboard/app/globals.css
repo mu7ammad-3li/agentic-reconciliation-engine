@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+  
+  --color-background: #f4f7f9;
+  --color-surface: #ffffff;
+  --color-foreground: #1e293b;
+  --color-foreground-muted: #64748b;
+  --color-border: #e2e8f0;
+  
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+
+  --color-accent-500: #f97316; /* The orange button */
+  --color-accent-600: #ea580c;
+
+  --color-success-500: #10b981;
+  --color-danger-500: #ef4444;
+
+  --animate-fade-in: fadeIn 0.3s ease-out;
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+  }
+}
+
+@layer utilities {
+  .enterprise-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    border-radius: 0.5rem;
+  }
+  
+  .elevated-row {
+    background: var(--color-surface);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    transform: scale(1.01);
+    border-radius: 0.5rem;
+    position: relative;
+    z-index: 10;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
