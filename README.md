@@ -46,5 +46,4 @@ cp .env.example .env
    uv run python agents/main.py --account-id "uuid" --csv-path "test_bank_statement.csv" --period-start "2020-01-01" --period-end "2030-01-01"
    ```
 
-## 🧠 Engineering Decisions
-Every major technical decision—from why we chose `uv` over `pip`, to why we enforce a 1% floating-point fuzzy match tolerance before passing data to the LLM—is documented from first principles in the [engineering-decisions.md](engineering-decisions.md) journal.
+
